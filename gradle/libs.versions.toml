@@ -4,7 +4,9 @@ google-java-format = "1.19.2"
 jacoco = "0.8.10"
 jakarta-validation = "3.1.1"
 junit-bom = "5.13.4"
+lombok-core = "1.18.40"
 mockito-core = "5.19.0"
+slf4j-api = "2.0.17"
 sonarqube = "6.3.1.5724"
 spotless = "7.2.1"
 
@@ -12,7 +14,9 @@ spotless = "7.2.1"
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
+lombok-core = { module = "org.projectlombok:lombok", version.ref = "lombok-core" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j-api" }
 
 [plugins]
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }

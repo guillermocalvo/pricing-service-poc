@@ -5,5 +5,6 @@ plugins {
 rootProject.name = 'pricing-service-poc'
 
 include(
-  'pricing-domain'
+  'pricing-domain',
+  'pricing-application',
 )
