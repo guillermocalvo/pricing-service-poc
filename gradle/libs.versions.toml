@@ -1,8 +1,18 @@
 [versions]
+assertj = "3.27.4"
+google-java-format = "1.19.2"
+jacoco = "0.8.10"
+jakarta-validation = "3.1.1"
+junit-bom = "5.13.4"
+mockito-core = "5.19.0"
 sonarqube = "6.3.1.5724"
 spotless = "7.2.1"
 
 [libraries]
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
 
 [plugins]
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
