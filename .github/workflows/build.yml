@@ -1,0 +1,80 @@
+
+# Continuous Integration
+name: Build
+
+on:
+  push:
+    branches:
+    - '*'
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # CHECKOUT
+    # ================================
+    - name: Checkout git branch
+      uses: actions/checkout@v5
+      with:
+        # Fetch all history for all tags and branches (recommended by SonarQube)
+        fetch-depth: 0
+
+    # ================================
+    # VALIDATE GRADLE WRAPPER
+    # ================================
+    - name: Validate Gradle Wrapper files
+      uses: gradle/actions/wrapper-validation@v4
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'zulu'
+        java-package: jdk
+        java-version: 24
+
+    # ================================
+    # SET UP GRADLE
+    # ================================
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
+        build-scan-terms-of-use-agree: "yes"
+
+    # ================================
+    # BUILD
+    # ================================
+    - name: Build
+      run: ./gradlew check
+
+    # ================================
+    # CACHE SONARCLOUD PACKAGES
+    # ================================
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v4
+      with:
+        key: ${{ runner.os }}-sonar
+        path: |
+          ~/.sonar/cache
+        restore-keys: |
+          ${{ runner.os }}-sonar
+
+    # ================================
+    # ANALYZE WITH SONARCLOUD
+    # ================================
+    - name: Analyze with SonarCloud
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew sonar
