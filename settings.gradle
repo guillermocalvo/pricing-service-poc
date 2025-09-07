@@ -8,4 +8,5 @@ include(
   'pricing-domain',
   'pricing-application',
   'pricing-persistence-jpa',
+  'pricing-query-rest',
 )

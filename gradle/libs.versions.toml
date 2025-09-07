@@ -13,6 +13,8 @@ slf4j-api = "2.0.17"
 sonarqube = "6.3.1.5724"
 spotless = "7.2.1"
 spring-data-bom = "2025.0.3"
+spring-framework-bom = "6.2.10"
+swagger = "2.2.36"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
@@ -26,6 +28,8 @@ mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.re
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j-api" }
 spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "spring-data-bom" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "spring-framework-bom" }
+swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations-jakarta", version.ref = "swagger" }
 
 [plugins]
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }

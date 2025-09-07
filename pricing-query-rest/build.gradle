@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':pricing-application')
+
+    implementation libs.slf4j.api
+    implementation libs.swagger.annotations
+    implementation libs.mapstruct.core
+
+    annotationProcessor libs.lombok.core
+    annotationProcessor libs.lombok.mapstruct.binding
+    annotationProcessor libs.mapstruct.processor
+
+    compileOnly libs.lombok.core
+
+    // Spring Web
+    implementation platform(libs.spring.framework.bom)
+    implementation 'org.springframework:spring-web'
+}
