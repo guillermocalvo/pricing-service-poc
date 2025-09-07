@@ -9,4 +9,5 @@ include(
   'pricing-application',
   'pricing-persistence-jpa',
   'pricing-query-rest',
+  'pricing-bootstrap',
 )

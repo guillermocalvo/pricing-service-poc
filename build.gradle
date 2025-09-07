@@ -106,6 +106,7 @@ sonar {
         property "sonar.projectKey", project.sonarProjectKey
         property 'sonar.projectVersion', project.version
         property "sonar.organization", project.sonarOrganization
+        property "sonar.coverage.jacoco.xmlReportPaths", project.sonarJacocoXmlPaths
         property 'sonar.sourceEncoding', 'UTF-8'
     }
 }

@@ -12,8 +12,11 @@ mockito-core = "5.19.0"
 slf4j-api = "2.0.17"
 sonarqube = "6.3.1.5724"
 spotless = "7.2.1"
+spring-boot = "3.5.5"
 spring-data-bom = "2025.0.3"
+spring-deps = "1.1.7"
 spring-framework-bom = "6.2.10"
+springdoc-openapi = "2.8.12"
 swagger = "2.2.36"
 
 [libraries]
@@ -29,8 +32,11 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-cor
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j-api" }
 spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "spring-data-bom" }
 spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "spring-framework-bom" }
+springdoc-openapi = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi" }
 swagger-annotations = { module = "io.swagger.core.v3:swagger-annotations-jakarta", version.ref = "swagger" }
 
 [plugins]
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-deps = { id = "io.spring.dependency-management", version.ref = "spring-deps" }
