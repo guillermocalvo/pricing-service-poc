@@ -1,0 +1,9 @@
+[versions]
+sonarqube = "6.3.1.5724"
+spotless = "7.2.1"
+
+[libraries]
+
+[plugins]
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

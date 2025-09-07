@@ -1,0 +1,15 @@
+plugins {
+    alias libs.plugins.sonarqube
+    alias libs.plugins.spotless apply false
+}
+
+// Configure SonarQube
+sonar {
+    properties {
+        property 'sonar.projectName', project.sonarProjectName
+        property "sonar.projectKey", project.sonarProjectKey
+        property 'sonar.projectVersion', project.version
+        property "sonar.organization", project.sonarOrganization
+        property 'sonar.sourceEncoding', 'UTF-8'
+    }
+}
