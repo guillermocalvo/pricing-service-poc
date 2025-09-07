@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation project(':pricing-application')
+
+    implementation libs.jakarta.persistence.api
+    implementation libs.mapstruct.core
+
+    // Annotation processors
+    annotationProcessor libs.lombok.core
+    annotationProcessor libs.lombok.mapstruct.binding
+    annotationProcessor libs.mapstruct.processor
+
+    compileOnly libs.lombok.core
+
+    // Spring Data
+    implementation platform(libs.spring.data.bom)
+    implementation 'org.springframework.data:spring-data-jpa'
+}

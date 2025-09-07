@@ -7,4 +7,5 @@ rootProject.name = 'pricing-service-poc'
 include(
   'pricing-domain',
   'pricing-application',
+  'pricing-persistence-jpa',
 )
