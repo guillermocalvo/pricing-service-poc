@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project(':pricing-domain')
+
+    implementation libs.slf4j.api
+
+    annotationProcessor libs.lombok.core
+
+    compileOnly libs.lombok.core
+}

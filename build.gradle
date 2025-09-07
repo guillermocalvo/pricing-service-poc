@@ -1,0 +1,112 @@
+plugins {
+    alias libs.plugins.sonarqube
+    alias libs.plugins.spotless apply false
+}
+
+subprojects {
+
+    // Use Maven central
+    repositories {
+        mavenCentral()
+    }
+
+    // Java toolchain
+    plugins.withType(JavaPlugin) {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+        }
+    }
+
+    // Configure java compiler
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.compilerArgs.addAll(['-Xlint:-processing', '-Werror'])
+    }
+
+    // Test suite
+    tasks.withType(Test).configureEach {
+        finalizedBy jacocoTestReport
+        testing {
+            suites {
+                test {
+                    useJUnitJupiter()
+                    dependencies {
+                        implementation platform(libs.junit.bom)
+                        implementation 'org.junit.jupiter:junit-jupiter-api'
+                        runtimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+                        implementation libs.assertj.core
+                        implementation libs.mockito.core
+                    }
+                }
+            }
+        }
+    }
+
+    // Source code formatting
+    apply plugin: 'com.diffplug.spotless'
+    spotless {
+        java {
+            def googleJavaFormatVersion = libs.versions.google.java.format.get()
+            googleJavaFormat(googleJavaFormatVersion)
+            removeUnusedImports()
+        }
+    }
+
+    // Code Coverage
+    apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = libs.versions.jacoco.get()
+    }
+    tasks.withType(JacocoReport).configureEach {
+        jacocoTestReport {
+            dependsOn test
+            reports {
+                csv.required = false
+                xml.required = true
+                html.required = true
+            }
+        }
+    }
+    tasks.withType(JacocoCoverageVerification) {
+        jacocoTestCoverageVerification {
+            dependsOn jacocoTestReport
+            violationRules {
+                rule {
+                    limit {
+                        counter = 'METHOD'
+                        minimum = 0.9
+                    }
+                }
+                rule {
+                    limit {
+                        counter = 'BRANCH'
+                        minimum = 0.8
+                    }
+                }
+                rule {
+                    limit {
+                        counter = 'INSTRUCTION'
+                        minimum = 0.8
+                    }
+                }
+            }
+        }
+        check {
+            finalizedBy jacocoTestCoverageVerification
+        }
+    }
+}
+
+// Configure SonarQube
+sonar {
+    properties {
+        property 'sonar.projectName', project.sonarProjectName
+        property "sonar.projectKey", project.sonarProjectKey
+        property 'sonar.projectVersion', project.version
+        property "sonar.organization", project.sonarOrganization
+        property "sonar.coverage.jacoco.xmlReportPaths", project.sonarJacocoXmlPaths
+        property 'sonar.sourceEncoding', 'UTF-8'
+    }
+}
