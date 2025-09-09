@@ -25,6 +25,10 @@ A domain-driven, hexagonal architecture example that exposes a product pricing s
 - [Mockito](https://site.mockito.org/)
 - [Gradle][GRADLE]
 
+> [!NOTE]
+> The **hexagonal architecture** is an architectural pattern that aims at creating loosely coupled application
+> components that can be easily connected to their software environment by means of *ports* and *adapters*.
+> This makes components exchangeable at any level and facilitates test automation.
 
 ## Project structure
 
