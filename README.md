@@ -36,8 +36,7 @@ This project is organized as a multi-module [Gradle][GRADLE] build:
 
 - **pricing-domain**: Pure domain model; independent of frameworks and external concerns.
 - **pricing-application**: Application service that orchestrates domain logic; defines ports.
-- **pricing-persistence-jpa**: Adapter that implements the "persistence" port using JPA repositories.
-- **pricing-query-rest**: Adapter that exposes the "query" port as REST endpoints to the outside world.
+- **pricing-infrastructure**: Adapter that implements application ports via REST and JPA.
 - **pricing-bootstrap**: Application startup and configuration; wires up all modules, configures Spring Boot, DI, etc.
 
 

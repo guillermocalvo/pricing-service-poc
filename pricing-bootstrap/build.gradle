@@ -8,8 +8,7 @@ plugins {
 dependencies {
     implementation project(':pricing-domain')
     implementation project(':pricing-application')
-    implementation project(':pricing-persistence-jpa')
-    implementation project(':pricing-query-rest')
+    implementation project(':pricing-infrastructure')
 
     implementation libs.springdoc.openapi
     runtimeOnly 'com.h2database:h2'
