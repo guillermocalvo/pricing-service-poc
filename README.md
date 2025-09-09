@@ -8,8 +8,22 @@
 
 # Pricing Service PoC
 
-A domain-driven, hexagonal architecture example that exposes a product pricing service through a REST API powered by
-[Spring Boot][SPRING_BOOT].
+A domain-driven, hexagonal architecture example that exposes a product pricing service through a REST API powered by:
+
+- [Java](https://www.oracle.com/java/)
+- [Spring Boot][SPRING_BOOT]
+- [Jakarta Validation API](https://beanvalidation.org/)
+- [Jakarta Persistence API](https://jakarta.ee/specifications/persistence/3.2/)
+- [Springdoc OpenAPI](https://springdoc.org/)
+- [Swagger Annotations](https://swagger.io/)
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+- [H2 Database Engine](https://www.h2database.com/)
+- [Lombok](https://projectlombok.org/)
+- [MapStruct](https://mapstruct.org/)
+- [JUnit](https://junit.org/)
+- [AssertJ](https://assertj.github.io/)
+- [Mockito](https://site.mockito.org/)
+- [Gradle][GRADLE]
 
 
 ## Project structure
