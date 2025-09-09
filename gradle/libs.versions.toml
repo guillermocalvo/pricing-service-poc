@@ -16,7 +16,7 @@ spring-boot = "3.5.5"
 spring-data-bom = "2025.0.3"
 spring-deps = "1.1.7"
 spring-framework-bom = "6.2.10"
-springdoc-openapi = "2.8.12"
+springdoc-openapi = "2.8.13"
 swagger = "2.2.36"
 
 [libraries]
