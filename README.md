@@ -74,6 +74,14 @@ You should see a JSON response like this:
 }
 ```
 
+> [!NOTE]
+> Alternatively, you can run a dockerized version of the service:
+>
+> ```shell
+> ./gradlew bootBuildImage
+>
+> docker run -it -p8080:8080 pricing-bootstrap:0.0.1-SNAPSHOT
+> ```
 
 ## Using Swagger-UI
 
