@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.example.pricing.adapter.query.rest.dto.ApiErrorResponse;
-import com.example.pricing.adapter.query.rest.dto.PriceQueryApiRequest;
 import com.example.pricing.adapter.query.rest.dto.PriceQueryApiResponse;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -33,7 +32,7 @@ class IntegrationTests {
 
   @Test
   void testGetPrice() {
-    final var url = "/api/v1/price/1/35455/2020-07-07T12:30:00Z";
+    final var url = "/api/v1/price?brandId=1&productId=35455&date=2020-07-07T12:30:00Z";
     assertThat(rest.getForObject(url, PriceQueryApiResponse.class))
         .hasFieldOrPropertyWithValue("price", new BigDecimal("38.9500"))
         .hasFieldOrPropertyWithValue("priceListId", 4L)
@@ -51,29 +50,9 @@ class IntegrationTests {
       long expectedPriceListId,
       Instant expectedStartDate,
       Instant expectedEndDate) {
-    final var url = "/api/v1/price/" + brandId + "/" + productId + "/" + date;
+    final var url =
+        "/api/v1/price?brandId=" + brandId + "&productId=" + productId + "&date=" + date;
     assertThat(rest.getForEntity(url, PriceQueryApiResponse.class))
-        .hasFieldOrPropertyWithValue("statusCode", OK)
-        .extracting(ResponseEntity::getBody)
-        .hasFieldOrPropertyWithValue("price", expectedPrice)
-        .hasFieldOrPropertyWithValue("priceListId", expectedPriceListId)
-        .hasFieldOrPropertyWithValue("startDate", expectedStartDate)
-        .hasFieldOrPropertyWithValue("endDate", expectedEndDate);
-  }
-
-  @ParameterizedTest
-  @CsvFileSource(resources = "/test-batch.csv", numLinesToSkip = 1)
-  void testQueryPrices(
-      long brandId,
-      long productId,
-      Instant date,
-      BigDecimal expectedPrice,
-      long expectedPriceListId,
-      Instant expectedStartDate,
-      Instant expectedEndDate) {
-    final var url = "/api/v1/price/query";
-    final var request = new PriceQueryApiRequest(brandId, productId, date);
-    assertThat(rest.postForEntity(url, request, PriceQueryApiResponse.class))
         .hasFieldOrPropertyWithValue("statusCode", OK)
         .extracting(ResponseEntity::getBody)
         .hasFieldOrPropertyWithValue("price", expectedPrice)
@@ -84,7 +63,7 @@ class IntegrationTests {
 
   @Test
   void testNotFound() {
-    final var url = "/api/v1/price/1/35455/1980-07-07T12:30:00Z";
+    final var url = "/api/v1/price?brandId=1&productId=35455&date=1980-07-07T12:30:00Z";
     assertThat(rest.getForEntity(url, ApiErrorResponse.class))
         .hasFieldOrPropertyWithValue("statusCode", NOT_FOUND)
         .extracting(ResponseEntity::getBody)
@@ -93,7 +72,7 @@ class IntegrationTests {
 
   @Test
   void testIllegalDate() {
-    final var url = "/api/v1/price/1/35455/whoops";
+    final var url = "/api/v1/price?brandId=1&productId=35455&date=whoops";
     assertThat(rest.getForEntity(url, ApiErrorResponse.class))
         .hasFieldOrPropertyWithValue("statusCode", BAD_REQUEST)
         .extracting(ResponseEntity::getBody)

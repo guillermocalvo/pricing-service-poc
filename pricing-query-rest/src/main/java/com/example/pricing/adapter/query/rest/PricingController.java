@@ -12,8 +12,6 @@ import com.example.pricing.port.query.dto.PriceQueryRequest;
 import com.example.pricing.service.PricingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -23,9 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -59,40 +55,27 @@ public record PricingController(PricingService pricingService) implements PriceQ
    * @throws PriceNotFoundException If there is no such price for the request.
    */
   @Operation(summary = "Get price", description = "Returns the current retail price for a product")
-  @GetMapping("/api/v1/price/{brandId}/{productId}/{date}")
+  @GetMapping("/api/v1/price")
   public PriceQueryApiResponse getPrice(
-      @PathVariable("brandId") @Parameter(description = "The brand ID", example = "1") long brandId,
-      @PathVariable("productId") @Parameter(description = "The product ID", example = "35455")
+      @RequestParam("brandId") @Parameter(description = "The brand ID", example = "1") long brandId,
+      @RequestParam("productId") @Parameter(description = "The product ID", example = "35455")
           long productId,
-      @PathVariable("date")
+      @RequestParam("date")
           @Parameter(description = "The point in time", example = "2020-07-07T12:30:00Z")
           @NotNull
           Instant date)
       throws PriceNotFoundException {
     final PriceQueryRequest request = new PriceQueryApiRequest(brandId, productId, date);
     log.info("Get price {}", request);
-    return handle(request);
+    return queryPrice(request);
   }
 
   /** {@inheritDoc} */
-  @Operation(
-      summary = "Query price",
-      description = "Returns the current retail price for a product",
-      requestBody =
-          @io.swagger.v3.oas.annotations.parameters.RequestBody(
-              content = @Content(schema = @Schema(implementation = PriceQueryApiRequest.class))))
-  // TODO: Replace HTTP verb `POST` with `QUERY` when available
-  // see: https://httpwg.org/http-extensions/draft-ietf-httpbis-safe-method-w-body.html
-  @PostMapping("/api/v1/price/query")
   @Override
   @NotNull
-  public PriceQueryApiResponse queryPrice(@NotNull @Valid @RequestBody PriceQueryRequest request)
+  public PriceQueryApiResponse queryPrice(@NotNull @Valid PriceQueryRequest request)
       throws PriceNotFoundException {
     log.info("Query price {}", request);
-    return handle(request);
-  }
-
-  PriceQueryApiResponse handle(PriceQueryRequest request) throws PriceNotFoundException {
     return pricingService
         .findCurrentPrice(request.brandId(), request.productId(), request.date())
         .map(PriceQueryResponseMapper.INSTANCE::toDto)
